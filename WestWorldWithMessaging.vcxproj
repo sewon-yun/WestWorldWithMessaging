@@ -137,6 +137,8 @@
     <ClCompile Include="MessageDispatcher.cpp" />
     <ClCompile Include="Miner.cpp" />
     <ClCompile Include="MinerOwnedStates.cpp" />
+    <ClCompile Include="MinersDaughter.cpp" />
+    <ClCompile Include="MinersDaughterOwnedStates.cpp" />
     <ClCompile Include="MinersSon.cpp" />
     <ClCompile Include="MinersSonOwnedStates.cpp" />
     <ClCompile Include="MinersWife.cpp" />
@@ -158,6 +160,8 @@
     <ClInclude Include="MessageTypes.h" />
     <ClInclude Include="Miner.h" />
     <ClInclude Include="MinerOwnedStates.h" />
+    <ClInclude Include="MinersDaughter.h" />
+    <ClInclude Include="MinersDaughterOwnedStates.h" />
     <ClInclude Include="MinersSon.h" />
     <ClInclude Include="MinersSonOwnedStates.h" />
     <ClInclude Include="MinersWife.h" />

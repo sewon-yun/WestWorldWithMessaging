@@ -51,6 +51,12 @@
     <ClCompile Include="MinersSonOwnedStates.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MinersDaughter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MinersDaughterOwnedStates.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseGameEntity.h">
@@ -108,6 +114,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MinersSonOwnedStates.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MinersDaughter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MinersDaughterOwnedStates.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
