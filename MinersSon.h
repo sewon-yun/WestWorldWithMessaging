@@ -1,14 +1,5 @@
 #ifndef MINERSSON_H
 #define MINERSSON_H
-//------------------------------------------------------------------------
-//
-//  Name: MinersSon.h
-//
-//  Desc: class to implement Miner Bob's son.
-//
-//  Author: Mat Buckland 2003 (fup@ai-junkie.com)
-//
-//------------------------------------------------------------------------
 
 #include <string>
 
@@ -32,7 +23,6 @@ private:
 
     location_type   m_Location;
 
-    //is she presently cooking?
     bool            m_bPlayingSoccer;
 
 
@@ -46,7 +36,7 @@ public:
         //set up the state machine
         m_pStateMachine = new StateMachine<MinersSon>(this);
 
-        m_pStateMachine->SetCurrentState(DoHomeWork::Instance());
+        m_pStateMachine->SetCurrentState(DoHomework::Instance());
 
         m_pStateMachine->SetGlobalState(SonsGlobalState::Instance());
     }

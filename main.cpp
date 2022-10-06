@@ -1,6 +1,5 @@
 #include <fstream>
 #include <time.h>
-
 #include "Locations.h"
 #include "Miner.h"
 #include "MinersWife.h"
@@ -45,8 +44,9 @@ int main()
   EntityMgr->RegisterEntity(Evan);
   EntityMgr->RegisterEntity(Emily);
   EntityMgr->RegisterEntity(Kim);
+
   //run Bob and Elsa through a few Update calls
-  for (int i=0; i<30; ++i)
+  for (int i=0; i < 30; ++i)
   { 
     Bob->Update();
     Elsa->Update();
@@ -62,10 +62,11 @@ int main()
   //tidy up
   delete Bob;
   delete Elsa;
-  delete Evan;
+  // delete Evan;
   delete Emily;
   delete Kim;
   //wait for a keypress before exiting
+  printf("\n2018182022 À±¼¼¿ø\n");
   PressAnyKeyToContinue();
 
 

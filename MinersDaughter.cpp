@@ -8,7 +8,7 @@ bool MinersDaughter::HandleMessage(const Telegram& msg)
 
 void MinersDaughter::Update()
 {
-	SetTextColor(FOREGROUND_GREEN && FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+	SetTextColor(FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 
 	m_pStateMachine->Update();
 }

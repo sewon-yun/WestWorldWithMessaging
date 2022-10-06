@@ -48,7 +48,7 @@ bool DaughtersGlobalState::OnMessage(MinersDaughter* daughter, const Telegram& m
         cout << "\nMessage handled by " << GetNameOfEntity(daughter->ID()) << " at time: "
             << Clock->GetCurrentTime();
 
-        SetTextColor(FOREGROUND_BLUE && FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+        SetTextColor(FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 
         cout << "\n" << GetNameOfEntity(daughter->ID()) <<
             ": I'm busy, eat later!";
