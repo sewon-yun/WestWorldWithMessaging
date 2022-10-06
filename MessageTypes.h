@@ -7,6 +7,8 @@ enum message_type
 {
   Msg_HiHoneyImHome,
   Msg_StewReady,
+  Msg_TimeToPlay,
+  Msg_SoccerReady,
 };
 
 
@@ -21,9 +23,11 @@ inline std::string MsgToStr(int msg)
   case Msg_StewReady:
     
     return "StewReady";
-
+  case Msg_TimeToPlay:
+      return "TimeToPlay";
+  case Msg_SoccerReady:
+      return "SoccerReady";
   default:
-
     return "Not recognized!";
   }
 }

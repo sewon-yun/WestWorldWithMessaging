@@ -158,8 +158,8 @@ void GoHomeAndSleepTilRested::Enter(Miner* pMiner)
     //let the wife know I'm home
     Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY, //time delay
                               pMiner->ID(),        //ID of sender
-                              ent_Elsa,            //ID of recipient
-                              Msg_HiHoneyImHome,   //the message
+                              ent_Evan,            //ID of recipient
+                              Msg_TimeToPlay,   //the message
                               NO_ADDITIONAL_INFO);    
   }
 }
@@ -209,6 +209,19 @@ bool GoHomeAndSleepTilRested::OnMessage(Miner* pMiner, const Telegram& msg)
       
      return true;
 
+
+   case Msg_TimeToPlay:
+       cout << "\nMessage handled by " << GetNameOfEntity(pMiner->ID())
+           << " at time: " << Clock->GetCurrentTime();
+
+       SetTextColor(FOREGROUND_RED | FOREGROUND_INTENSITY);
+
+       cout << "\n" << GetNameOfEntity(pMiner->ID())
+           << ": Okay Hun, ahm a comin'!";
+
+       pMiner->GetFSM()->ChangeState(EatStew::Instance());
+
+       return true;
    }//end switch
 
    return false; //send message to global message handler

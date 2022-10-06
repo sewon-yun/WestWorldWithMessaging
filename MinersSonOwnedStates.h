@@ -48,20 +48,20 @@ public:
 //
 
 //------------------------------------------------------------------------
-class DoHouseWork1 : public State<MinersSon>
+class DoHomeWork : public State<MinersSon>
 {
 private:
 
-	DoHouseWork1() {}
+	DoHomeWork() {}
 
 	//copy ctor and assignment should be private
-	DoHouseWork1(const DoHouseWork1&);
-	DoHouseWork1& operator=(const DoHouseWork1&);
+	DoHomeWork(const DoHomeWork&);
+	DoHomeWork& operator=(const DoHomeWork&);
 
 public:
 
 	//this is a singleton
-	static DoHouseWork1* Instance();
+	static DoHomeWork* Instance();
 
 	virtual void Enter(MinersSon* son);
 
@@ -109,20 +109,20 @@ public:
 //
 
 //------------------------------------------------------------------------
-class CookStew1 : public State<MinersSon>
+class PlaySoccer : public State<MinersSon>
 {
 private:
 
-	CookStew1() {}
+	PlaySoccer() {}
 
 	//copy ctor and assignment should be private
-	CookStew1(const CookStew1&);
-	CookStew1& operator=(const CookStew1&);
+	PlaySoccer(const PlaySoccer&);
+	PlaySoccer& operator=(const PlaySoccer&);
 
 public:
 
 	//this is a singleton
-	static CookStew1* Instance();
+	static PlaySoccer* Instance();
 
 	virtual void Enter(MinersSon* son);
 

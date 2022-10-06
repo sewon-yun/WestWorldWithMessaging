@@ -33,20 +33,20 @@ private:
     location_type   m_Location;
 
     //is she presently cooking?
-    bool            m_bCooking;
+    bool            m_bPlayingSoccer;
 
 
 public:
 
     MinersSon(int id) :m_Location(shack),
-        m_bCooking(false),
+        m_bPlayingSoccer(false),
         BaseGameEntity(id)
 
     {
         //set up the state machine
         m_pStateMachine = new StateMachine<MinersSon>(this);
 
-        m_pStateMachine->SetCurrentState(DoHouseWork1::Instance());
+        m_pStateMachine->SetCurrentState(DoHomeWork::Instance());
 
         m_pStateMachine->SetGlobalState(SonsGlobalState::Instance());
     }
@@ -66,8 +66,8 @@ public:
     location_type Location()const { return m_Location; }
     void          ChangeLocation(location_type loc) { m_Location = loc; }
 
-    bool          Cooking()const { return m_bCooking; }
-    void          SetCooking(bool val) { m_bCooking = val; }
+    bool          PlayingSoccer()const { return m_bPlayingSoccer; }
+    void          SetPlayingSoccer(bool val) { m_bPlayingSoccer = val; }
 
 };
 
