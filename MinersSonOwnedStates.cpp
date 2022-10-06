@@ -249,19 +249,19 @@ EatStewForSon* EatStewForSon::Instance()
 
 void EatStewForSon::Enter(MinersSon* pSon)
 {
-    cout << "\n" << GetNameOfEntity(pSon->ID()) << ": " << "Smells Reaaal goood Elsa!";
+    cout << "\n" << GetNameOfEntity(pSon->ID()) << ": " << "Smells Really good mom!";
 }
 
 void EatStewForSon::Execute(MinersSon* pSon)
 {
-    cout << "\n" << GetNameOfEntity(pSon->ID()) << ": " << "Tastes real good too!";
+    cout << "\n" << GetNameOfEntity(pSon->ID()) << ": " << "Tastes good too!";
 
     pSon->GetFSM()->RevertToPreviousState();
 }
 
 void EatStewForSon::Exit(MinersSon* pSon)
 {
-    cout << "\n" << GetNameOfEntity(pSon->ID()) << ": " << "Thank you mom";
+    cout << "\n" << GetNameOfEntity(pSon->ID()) << ": " << "It was good, Mom";
 }
 
 
