@@ -43,6 +43,21 @@ bool SonsGlobalState::OnMessage(MinersSon* son, const Telegram& msg)
 
     switch (msg.Msg)
     {
+    case Msg_StewReady:
+    {
+        cout << "\nMessage handled by " << GetNameOfEntity(son->ID()) << " at time: "
+            << Clock->GetCurrentTime();
+
+        SetTextColor(FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+
+        cout << "\n" << GetNameOfEntity(son->ID()) <<
+            ": Thank you for the meal!";
+
+        son->GetFSM()->ChangeState(EatStewForSon::Instance());
+        return true;
+    }
+
+
     case Msg_TimeToPlay:
     {
         cout << "\nMessage handled by " << GetNameOfEntity(son->ID()) << " at time: "
@@ -54,9 +69,10 @@ bool SonsGlobalState::OnMessage(MinersSon* son, const Telegram& msg)
             ": Hi Daddy, Let's Play Soccer!!";
 
         son->GetFSM()->ChangeState(PlaySoccer::Instance());
+        return true;
     }
 
-    return true;
+
 
     }//end switch
 
@@ -220,5 +236,37 @@ bool PlaySoccer::OnMessage(MinersSon* son, const Telegram& msg)
 
     }//end switch
 
+    return false;
+}
+
+EatStewForSon* EatStewForSon::Instance()
+{
+    static EatStewForSon instance;
+
+    return &instance;
+}
+
+
+void EatStewForSon::Enter(MinersSon* pSon)
+{
+    cout << "\n" << GetNameOfEntity(pSon->ID()) << ": " << "Smells Reaaal goood Elsa!";
+}
+
+void EatStewForSon::Execute(MinersSon* pSon)
+{
+    cout << "\n" << GetNameOfEntity(pSon->ID()) << ": " << "Tastes real good too!";
+
+    pSon->GetFSM()->RevertToPreviousState();
+}
+
+void EatStewForSon::Exit(MinersSon* pSon)
+{
+    cout << "\n" << GetNameOfEntity(pSon->ID()) << ": " << "Thank you mom";
+}
+
+
+bool EatStewForSon::OnMessage(MinersSon* pSon, const Telegram& msg)
+{
+    //send msg to global message handler
     return false;
 }

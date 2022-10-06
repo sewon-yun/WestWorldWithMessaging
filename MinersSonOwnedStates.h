@@ -133,5 +133,30 @@ public:
 	virtual bool OnMessage(MinersSon* son, const Telegram& msg);
 };
 
+class EatStewForSon : public State<MinersSon>
+{
+private:
+
+	EatStewForSon() {}
+
+	//copy ctor and assignment should be private
+	EatStewForSon(const EatStewForSon&);
+	EatStewForSon& operator=(const EatStewForSon&);
+
+public:
+
+	//this is a singleton
+	static EatStewForSon* Instance();
+
+	virtual void Enter(MinersSon* son);
+
+	virtual void Execute(MinersSon* son);
+
+	virtual void Exit(MinersSon* son);
+
+	virtual bool OnMessage(MinersSon* agent, const Telegram& msg);
+};
+
 
 #endif
+

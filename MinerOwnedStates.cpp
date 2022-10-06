@@ -158,8 +158,8 @@ void GoHomeAndSleepTilRested::Enter(Miner* pMiner)
     //let the wife know I'm home
     Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY, //time delay
                               pMiner->ID(),        //ID of sender
-                              ent_Evan,            //ID of recipient
-                              Msg_TimeToPlay,   //the message
+                              ent_Elsa,            //ID of recipient
+                              Msg_HiHoneyImHome,   //the message
                               NO_ADDITIONAL_INFO);    
   }
 }
