@@ -28,8 +28,6 @@ SonsGlobalState* SonsGlobalState::Instance()
 
 void SonsGlobalState::Execute(MinersSon* son)
 {
-    //1 in 10 chance of needing the bathroom (provided she is not already
-    //in the bathroom)
     if ((RandFloat() < 0.1) &&
         !son->GetFSM()->isInState(*VisitBathroom1::Instance()))
     {
@@ -148,7 +146,7 @@ void VisitBathroom1::Execute(MinersSon* son)
 {
     cout << "\n" << GetNameOfEntity(son->ID()) << ": Wow! Very cold... where's the warm water?";
 
-    son->GetFSM()->RevertToPreviousState();
+    son->GetFSM()->ChangeState(DoHomeWork::Instance());
 }
 
 void VisitBathroom1::Exit(MinersSon* son)

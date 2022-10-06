@@ -26,18 +26,18 @@ DaughtersGlobalState* DaughtersGlobalState::Instance()
 }
 
 
-void DaughtersGlobalState::Execute(MinersDaughter* son)
+void DaughtersGlobalState::Execute(MinersDaughter* daughter)
 {
     //1 in 10 chance of needing the bathroom (provided she is not already
     //in the bathroom)
     if ((RandFloat() < 0.1) &&
-        !son->GetFSM()->isInState(*SleepingInRoom::Instance()))
+        !daughter->GetFSM()->isInState(*SleepingInRoom::Instance()))
     {
-        son->GetFSM()->ChangeState(SleepingInRoom::Instance());
+        daughter->GetFSM()->ChangeState(SleepingInRoom::Instance());
     }
 }
 
-bool DaughtersGlobalState::OnMessage(MinersDaughter* son, const Telegram& msg)
+bool DaughtersGlobalState::OnMessage(MinersDaughter* daughter, const Telegram& msg)
 {
     SetTextColor(BACKGROUND_RED | FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
 
@@ -45,15 +45,15 @@ bool DaughtersGlobalState::OnMessage(MinersDaughter* son, const Telegram& msg)
     {
     case Msg_StewReady:
     {
-        cout << "\nMessage handled by " << GetNameOfEntity(son->ID()) << " at time: "
+        cout << "\nMessage handled by " << GetNameOfEntity(daughter->ID()) << " at time: "
             << Clock->GetCurrentTime();
 
         SetTextColor(FOREGROUND_BLUE && FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 
-        cout << "\n" << GetNameOfEntity(son->ID()) <<
+        cout << "\n" << GetNameOfEntity(daughter->ID()) <<
             ": I'm busy, eat later!";
 
-        son->GetFSM()->ChangeState(EatStewForDaughter::Instance());
+        daughter->GetFSM()->ChangeState(EatStewForDaughter::Instance());
         return true;
     }
     }//end switch
@@ -71,36 +71,36 @@ PlayingDolls* PlayingDolls::Instance()
 }
 
 
-void PlayingDolls::Enter(MinersDaughter* son)
+void PlayingDolls::Enter(MinersDaughter* daughter)
 {
-    cout << "\n" << GetNameOfEntity(son->ID()) << ": Where's my Bobby!!";
+    cout << "\n" << GetNameOfEntity(daughter->ID()) << ": Where's my Bobby!!";
 }
 
 
-void PlayingDolls::Execute(MinersDaughter* son)
+void PlayingDolls::Execute(MinersDaughter* daughter)
 {
     switch (RandInt(0, 1))
     {
     case 0:
 
-        cout << "\n" << GetNameOfEntity(son->ID()) << ": Do Mom's role";
+        cout << "\n" << GetNameOfEntity(daughter->ID()) << ": Do Mom's role";
 
         break;
 
     case 1:
 
-        cout << "\n" << GetNameOfEntity(son->ID()) << ": Do Dad's role";
+        cout << "\n" << GetNameOfEntity(daughter->ID()) << ": Do Dad's role";
 
         break;
 
     }
 }
 
-void PlayingDolls::Exit(MinersDaughter* son)
+void PlayingDolls::Exit(MinersDaughter* daughter)
 {
 }
 
-bool PlayingDolls::OnMessage(MinersDaughter* son, const Telegram& msg)
+bool PlayingDolls::OnMessage(MinersDaughter* daughter, const Telegram& msg)
 {
     return false;
 }
@@ -125,7 +125,7 @@ void SleepingInRoom::Execute(MinersDaughter* daughter)
 {
     cout << "\n" << GetNameOfEntity(daughter->ID()) << ": ZZZ...";
 
-    daughter->GetFSM()->RevertToPreviousState();
+    daughter->GetFSM()->ChangeState(PlayingDolls::Instance());
 }
 
 void SleepingInRoom::Exit(MinersDaughter* daughter)
