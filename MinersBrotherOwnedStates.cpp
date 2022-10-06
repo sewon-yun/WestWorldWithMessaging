@@ -6,7 +6,7 @@
 #include "MessageDispatcher.h"
 #include "MessageTypes.h"
 #include "EntityNames.h"
-
+#include "MinersWife.h"
 #include <iostream>
 using std::cout;
 
@@ -55,23 +55,6 @@ bool BrothersGlobalState::OnMessage(MinersBrother* brother, const Telegram& msg)
         return true;
     }
 
-
-    case Msg_TimeToPlay:
-    {
-        cout << "\nMessage handled by " << GetNameOfEntity(brother->ID()) << " at time: "
-            << Clock->GetCurrentTime();
-
-        SetTextColor(FOREGROUND_BLUE | FOREGROUND_INTENSITY);
-
-        cout << "\n" << GetNameOfEntity(brother->ID()) <<
-            ": Alright, see you best keeper!!!";
-
-        brother->GetFSM()->ChangeState(PlaySoccerWithNephew::Instance());
-        return true;
-    }
-
-
-
     }//end switch
 
     return false;
@@ -87,46 +70,46 @@ DoGame* DoGame::Instance()
 }
 
 
-void DoGame::Enter(MinersBrother* son)
+void DoGame::Enter(MinersBrother* brother)
 {
-    cout << "\n" << GetNameOfEntity(son->ID()) << ": Wow is my life...";
+    cout << "\n" << GetNameOfEntity(brother->ID()) << ": Wow is my life...";
 }
 
 
-void DoGame::Execute(MinersBrother* son)
+void DoGame::Execute(MinersBrother* brother)
 {
     switch (RandInt(0, 3))
     {
     case 0:
 
-        cout << "\n" << GetNameOfEntity(son->ID()) << ": Do Quest";
+        cout << "\n" << GetNameOfEntity(brother->ID()) << ": Do Quest";
 
         break;
 
     case 1:
 
-        cout << "\n" << GetNameOfEntity(son->ID()) << ": Do Raid";
+        cout << "\n" << GetNameOfEntity(brother->ID()) << ": Do Raid";
 
         break;
 
     case 2:
 
-        cout << "\n" << GetNameOfEntity(son->ID()) << ": Do PVP";
+        cout << "\n" << GetNameOfEntity(brother->ID()) << ": Do PVP";
 
         break;
     case 3:
 
-        cout << "\n" << GetNameOfEntity(son->ID()) << ": Do WebSurfing";
+        cout << "\n" << GetNameOfEntity(brother->ID()) << ": Do WebSurfing";
 
         break;
     }
 }
 
-void DoGame::Exit(MinersBrother* son)
+void DoGame::Exit(MinersBrother* brother)
 {
 }
 
-bool DoGame::OnMessage(MinersBrother* son, const Telegram& msg)
+bool DoGame::OnMessage(MinersBrother* brother, const Telegram& msg)
 {
     return false;
 }
@@ -141,17 +124,22 @@ WorkHard* WorkHard::Instance()
 }
 
 
-void WorkHard::Enter(MinersBrother* son)
+void WorkHard::Enter(MinersBrother* brother)
 {
-    cout << "\n" << GetNameOfEntity(son->ID()) << ": Today's Work...";
+    cout << "\n" << GetNameOfEntity(brother->ID()) << ": Today's Work...";
 }
 
 
-void WorkHard::Execute(MinersBrother* son)
+void WorkHard::Execute(MinersBrother* brother)
 {
-    cout << "\n" << GetNameOfEntity(son->ID()) << ": Loading trucks and stacking boxes";
+    cout << "\n" << GetNameOfEntity(brother->ID()) << ": Loading trucks and stacking boxes";
+    brother->GetFSM()->ChangeState(PlaySoccerWithNephew::Instance());
 
-    son->GetFSM()->ChangeState(DoGame::Instance());
+    Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY, //time delay
+        brother->ID(),        //ID of sender
+        ent_Evan,            //ID of recipient
+        Msg_TimeToPlay,     //the message
+        NO_ADDITIONAL_INFO);
 }
 
 void WorkHard::Exit(MinersBrother* son)
@@ -176,22 +164,22 @@ PlaySoccerWithNephew* PlaySoccerWithNephew::Instance()
 }
 
 
-void PlaySoccerWithNephew::Enter(MinersBrother* son)
+void PlaySoccerWithNephew::Enter(MinersBrother* brother)
 {
     //if not already cooking put the stew in the oven
-    if (!son->PlayingSoccer())
+    if (!brother->PlayingSoccer())
     {
-        cout << "\n" << GetNameOfEntity(son->ID()) << ": Putting the bool in the ground";
+        cout << "\n" << GetNameOfEntity(brother->ID()) << ": Drive Car in the ground";
 
         //send a delayed message myself so that I know when to take the stew
         //out of the oven
         Dispatch->DispatchMessage(1.5,                  //time delay
-            son->ID(),           //sender ID
-            son->ID(),           //receiver ID
+            brother->ID(),           //sender ID
+            brother->ID(),           //receiver ID
             Msg_SoccerReady,        //msg
             NO_ADDITIONAL_INFO);
 
-        son->SetPlayingSoccer(true);
+        brother->SetPlayingSoccer(true);
     }
 }
 
@@ -203,13 +191,13 @@ void PlaySoccerWithNephew::Execute(MinersBrother* son)
 
 void PlaySoccerWithNephew::Exit(MinersBrother* son)
 {
-    SetTextColor(FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+    SetTextColor(FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 
     cout << "\n" << GetNameOfEntity(son->ID()) << ": Sunsets in paradise, the end";
 }
 
 
-bool PlaySoccerWithNephew::OnMessage(MinersBrother* son, const Telegram& msg)
+bool PlaySoccerWithNephew::OnMessage(MinersBrother* brother, const Telegram& msg)
 {
     SetTextColor(BACKGROUND_RED | FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
 
@@ -217,22 +205,15 @@ bool PlaySoccerWithNephew::OnMessage(MinersBrother* son, const Telegram& msg)
     {
     case Msg_SoccerReady:
     {
-        cout << "\nMessage received by " << GetNameOfEntity(son->ID()) <<
+        cout << "\nMessage received by " << GetNameOfEntity(brother->ID()) <<
             " at time: " << Clock->GetCurrentTime();
 
-        SetTextColor(FOREGROUND_BLUE | FOREGROUND_INTENSITY);
-        cout << "\n" << GetNameOfEntity(son->ID()) << ": My Skill is God Hand";
+        SetTextColor(FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+        cout << "\n" << GetNameOfEntity(brother->ID()) << ": My Skill is God Hand";
 
-        //let hubby know the stew is ready
-        Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY,
-            son->ID(),
-            ent_Miner_Bob,
-            Msg_SoccerReady,
-            NO_ADDITIONAL_INFO);
+        brother->SetPlayingSoccer(false);
 
-        son->SetPlayingSoccer(false);
-
-        son->GetFSM()->ChangeState(DoGame::Instance());
+        brother->GetFSM()->ChangeState(DoGame::Instance());
     }
 
     return true;
@@ -250,25 +231,25 @@ EatStewForBrother* EatStewForBrother::Instance()
 }
 
 
-void EatStewForBrother::Enter(MinersBrother* pSon)
+void EatStewForBrother::Enter(MinersBrother* pBrother)
 {
-    cout << "\n" << GetNameOfEntity(pSon->ID()) << ": " << "Let's Washing the hand!";
+    cout << "\n" << GetNameOfEntity(pBrother->ID()) << ": " << "Let's Washing the hand!";
 }
 
-void EatStewForBrother::Execute(MinersBrother* pSon)
+void EatStewForBrother::Execute(MinersBrother* pBrother)
 {
-    cout << "\n" << GetNameOfEntity(pSon->ID()) << ": " << "Tastes good too!";
+    cout << "\n" << GetNameOfEntity(pBrother->ID()) << ": " << "Tastes good too!";
 
-    pSon->GetFSM()->RevertToPreviousState();
+    pBrother->GetFSM()->RevertToPreviousState();
 }
 
-void EatStewForBrother::Exit(MinersBrother* pSon)
+void EatStewForBrother::Exit(MinersBrother* pBrother)
 {
-    cout << "\n" << GetNameOfEntity(pSon->ID()) << ": " << "Go to wash the dish";
+    cout << "\n" << GetNameOfEntity(pBrother->ID()) << ": " << "Go to wash the dish";
 }
 
 
-bool EatStewForBrother::OnMessage(MinersBrother* pSon, const Telegram& msg)
+bool EatStewForBrother::OnMessage(MinersBrother* pBrother, const Telegram& msg)
 {
     //send msg to global message handler
     return false;

@@ -64,7 +64,7 @@ bool SonsGlobalState::OnMessage(MinersSon* son, const Telegram& msg)
         SetTextColor(FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 
         cout << "\n" << GetNameOfEntity(son->ID()) <<
-            ": Hi Daddy, Let's Play Soccer!!";
+            ": Hi Uncle, Let's Play Soccer!!";
 
         son->GetFSM()->ChangeState(PlaySoccer::Instance());
         return true;
@@ -176,7 +176,7 @@ void PlaySoccer::Enter(MinersSon* son)
     //if not already cooking put the stew in the oven
     if (!son->PlayingSoccer())
     {
-        cout << "\n" << GetNameOfEntity(son->ID()) << ": Putting the bool in the ground";
+        cout << "\n" << GetNameOfEntity(son->ID()) << ": Putting the ball in the ground";
 
         //send a delayed message myself so that I know when to take the stew
         //out of the oven
@@ -200,7 +200,7 @@ void PlaySoccer::Exit(MinersSon* son)
 {
     SetTextColor(FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 
-    cout << "\n" << GetNameOfEntity(son->ID()) << ": I'm tired, byebye";
+    cout << "\n" << GetNameOfEntity(son->ID()) << ": Thank you for playing soccer with me, uncle!!";
 }
 
 
@@ -218,12 +218,6 @@ bool PlaySoccer::OnMessage(MinersSon* son, const Telegram& msg)
         SetTextColor(FOREGROUND_BLUE | FOREGROUND_INTENSITY);
         cout << "\n" << GetNameOfEntity(son->ID()) << ": Lets go! I'm heungmin Son";
 
-        //let hubby know the stew is ready
-        Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY,
-            son->ID(),
-            ent_Miner_Bob,
-            Msg_SoccerReady,
-            NO_ADDITIONAL_INFO);
 
         son->SetPlayingSoccer(false);
 
