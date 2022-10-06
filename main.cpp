@@ -6,6 +6,7 @@
 #include "MinersWife.h"
 #include "MinersSon.h"
 #include "MinersDaughter.h"
+#include "MinersBrother.h"
 #include "EntityManager.h"
 #include "MessageDispatcher.h"
 #include "misc/ConsoleUtils.h"
@@ -36,11 +37,14 @@ int main()
   //create his daughter
   MinersDaughter* Emily = new MinersDaughter(ent_Emily);
 
+  //create his brother
+  MinersBrother* Kim = new MinersBrother(ent_Kim);
   //register them with the entity manager
   EntityMgr->RegisterEntity(Bob);
   EntityMgr->RegisterEntity(Elsa);
   EntityMgr->RegisterEntity(Evan);
   EntityMgr->RegisterEntity(Emily);
+  EntityMgr->RegisterEntity(Kim);
   //run Bob and Elsa through a few Update calls
   for (int i=0; i<30; ++i)
   { 
@@ -48,6 +52,7 @@ int main()
     Elsa->Update();
     Evan->Update();
     Emily->Update();
+    Kim->Update();
     //dispatch any delayed messages
     Dispatch->DispatchDelayedMessages();
 
@@ -59,6 +64,7 @@ int main()
   delete Elsa;
   delete Evan;
   delete Emily;
+  delete Kim;
   //wait for a keypress before exiting
   PressAnyKeyToContinue();
 

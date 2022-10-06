@@ -225,6 +225,12 @@ bool CookStew::OnMessage(MinersWife* wife, const Telegram& msg)
           Msg_StewReady,
           NO_ADDITIONAL_INFO);
 
+      Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY,
+          wife->ID(),
+          ent_Kim,
+          Msg_StewReady,
+          NO_ADDITIONAL_INFO);
+
       wife->SetCooking(false);
 
       wife->GetFSM()->ChangeState(DoHouseWork::Instance());               
